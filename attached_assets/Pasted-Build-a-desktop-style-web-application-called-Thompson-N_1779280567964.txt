@@ -1,0 +1,183 @@
+Build a desktop-style web application called "Thompson NFA Studio" — a visual tool 
+that converts Regular Expressions (Regex) to NFAs using Thompson's Construction 
+Algorithm, step by step.
+
+---
+
+## PROJECT OVERVIEW
+
+The application converts a user-entered regular expression (e.g., (a|b)*abb) into 
+an NFA (Nondeterministic Finite Automaton) using Thompson's Construction Algorithm. 
+The conversion is shown step-by-step with a live visual graph of the NFA states and 
+transitions. This is an educational tool for students studying Formal Languages and 
+Automata Theory.
+
+---
+
+## AESTHETIC & UI DIRECTION
+
+Design aesthetic: "Scientific dark lab" — dark background (#0d1117 or similar), 
+monospace/technical fonts (JetBrains Mono or Fira Code for code elements, 
+a clean sans-serif like DM Sans for UI labels), electric blue/cyan accent colors 
+for active states, amber/yellow for epsilon transitions, green for accept states, 
+red for error states.
+
+The layout should feel like an IDE or circuit design tool — professional, dense 
+with information but not cluttered. Use smooth animations for state-by-state graph 
+construction. The graph should render inline in the app (not open a new window).
+
+Do NOT use generic purple gradient / white background aesthetics. 
+Do NOT use Bootstrap or default component libraries — write custom CSS.
+
+---
+
+## CORE FEATURES TO IMPLEMENT
+
+### 1. Regex Input Panel
+- A large styled input field for typing the regex (e.g., (a|b)*abb)
+- Supported operators: concatenation, union (|), Kleene star (*), plus (+), 
+  question mark (?), parentheses for grouping
+- A "Convert" button that triggers the full pipeline
+- A "Step-by-step" toggle that animates the NFA building process one 
+  sub-expression at a time
+- Real-time syntax validation with inline error messages 
+  (highlight invalid characters, unmatched parentheses)
+
+### 2. Thompson's Algorithm Engine (core logic)
+Implement Thompson's Construction in full:
+- Primitive NFA for single character: two states, one labeled transition
+- Union (A|B): new start state with ε-transitions to both A and B; 
+  new accept state with ε-transitions from both
+- Concatenation (AB): connect accept state of A to start state of B via ε
+- Kleene Star (A*): new start/accept state; ε-loop back and ε-bypass
+- Plus (A+): same as A* but without the bypass ε
+- Optional (A?): same as union with empty string
+
+Each step must track: states created, transitions added, which sub-NFA it 
+corresponds to (for step-by-step mode).
+
+### 3. NFA Graph Visualizer
+Use a graph rendering library (Cytoscape.js, D3.js, or Vis.js — your choice) 
+to draw the NFA:
+- Circular nodes for states; double-ring for accept states
+- Labeled directed edges for character transitions
+- Dashed edges for ε (epsilon) transitions
+- Color coding: start state = blue, accept state = green, 
+  intermediate = gray/white
+- Smooth left-to-right layout (hierarchical or dagre layout preferred)
+- Zoom and pan support
+- On step-by-step mode: each new sub-NFA appears with a highlight animation 
+  (nodes pulse in, edges draw in)
+
+### 4. State Transition Table
+Below (or beside) the graph, show a formatted table:
+- Rows = states (q0, q1, q2, ...)
+- Columns = input alphabet symbols + ε
+- Cells = set of reachable states (e.g., {q2, q3})
+- Highlighted row for start state, highlighted border for accept states
+
+### 5. File Import Feature (REQUIRED for fast data entry)
+Provide a file upload button that accepts:
+- **JSON** file: defines a pre-built regex or a full NFA structure 
+  (states, alphabet, transitions, start state, accept states)
+- **TXT / plain text** file: single line containing the regex string
+- **Excel (.xlsx) or CSV** file: transition table format — 
+  columns are input symbols, rows are states, cells are target state sets
+
+When a file is loaded:
+- Auto-populate the regex input OR
+- Skip the conversion step and directly render the imported NFA graph 
+  (if a full NFA was provided)
+- Show a success/error toast notification
+
+Define and document the expected file formats clearly in a collapsible 
+"Format Guide" section in the UI.
+
+### 6. Export Feature
+- Export NFA as JSON (full state/transition definition)
+- Export graph as PNG or SVG
+- Export transition table as CSV
+
+### 7. Step-by-Step Walkthrough Panel
+A side panel or bottom drawer that shows:
+- Current step number and description 
+  (e.g., "Step 3: Applying Kleene Star to sub-NFA for 'a|b'")
+- The sub-expression being processed, highlighted in the original regex
+- Which states and transitions were just added
+
+Navigation: Previous / Next / Auto-play buttons with speed slider.
+
+---
+
+## TECHNICAL REQUIREMENTS
+
+- Install via npm; run with a single command (npm start or npm run dev)
+- Framework: React (with Vite) OR vanilla HTML/CSS/JS — your choice based on 
+  what produces the cleanest result
+- No backend required — all logic runs client-side
+- Graph library: Cytoscape.js (preferred), D3.js, or Vis.js
+- For Excel parsing: use SheetJS (xlsx npm package)
+- State management: keep it simple — React useState/useReducer or plain JS 
+  module-level state
+- All Thompson algorithm logic must be in a separate, well-commented module 
+  (thompson.js or similar) — not mixed into UI components
+- The NFA data structure must be serializable to/from JSON
+
+---
+
+## FILE FORMAT SPECIFICATIONS (implement these exactly)
+
+### JSON import format:
+{
+  "type": "nfa",
+  "states": ["q0", "q1", "q2", "q3"],
+  "alphabet": ["a", "b"],
+  "start": "q0",
+  "accept": ["q3"],
+  "transitions": [
+    { "from": "q0", "symbol": "a", "to": ["q1"] },
+    { "from": "q0", "symbol": "ε", "to": ["q2"] }
+  ]
+}
+
+### CSV/Excel import format (transition table):
+First row = header: State, a, b, ε
+Each subsequent row = state name, then target state sets per symbol
+Example: q0, {q1}, {}, {q2,q3}
+
+### TXT import format:
+Single line containing the regex. Example: (a|b)*abb
+
+---
+
+## EXAMPLE TEST CASES (implement these as preset buttons)
+
+1. (a|b)*abb   — classic textbook example
+2. a*b+         — Kleene star + plus
+3. (ab|c)?d    — optional group + concatenation
+
+Each preset should load the regex and immediately show the NFA.
+
+---
+
+## NON-FUNCTIONAL REQUIREMENTS
+
+- The app must work fully offline after npm install (no CDN calls at runtime 
+  except for fonts if needed)
+- Responsive layout: works at 1280px+ width (desktop/laptop focus)
+- No external UI component libraries (Material UI, Chakra, Ant Design, etc.) — 
+  custom CSS only, keeping the design intentional
+- All text labels, button names, and UI copy should be in Turkish 
+  (e.g., "Dönüştür", "Adım Adım", "Dosya Yükle", "Dışa Aktar")
+- Add a small "Nasıl Kullanılır?" (How to Use) modal with 3-4 bullet points
+
+---
+
+## DELIVERABLES EXPECTED
+
+1. Full project scaffold installable via: npm install && npm run dev
+2. /src/thompson.js — the core algorithm module
+3. /src/components/ — UI components (InputPanel, GraphView, TransitionTable, 
+   StepPanel, FileImporter)
+4. /public/examples/ — 3 example JSON files matching the format spec above
+5. README.md — setup instructions + file format documentation in Turkish

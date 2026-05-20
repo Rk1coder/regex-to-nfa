@@ -1,0 +1,18 @@
+{
+  "type": "nfa",
+  "states": ["q0","q1","q2","q3","q4","q5","q6","q7","q8"],
+  "alphabet": ["a","b","c","d"],
+  "start": "q0",
+  "accept": ["q8"],
+  "transitions": [
+    {"from":"q0","symbol":"ε","to":["q1","q5"]},
+    {"from":"q1","symbol":"a","to":["q2"]},
+    {"from":"q2","symbol":"b","to":["q3"]},
+    {"from":"q3","symbol":"ε","to":["q4"]},
+    {"from":"q4","symbol":"ε","to":["q5"]},
+    {"from":"q5","symbol":"ε","to":["q6"]},
+    {"from":"q5","symbol":"c","to":["q6"]},
+    {"from":"q6","symbol":"ε","to":["q7"]},
+    {"from":"q7","symbol":"d","to":["q8"]}
+  ]
+}

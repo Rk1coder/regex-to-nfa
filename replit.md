@@ -1,6 +1,6 @@
-# [Project name]
+# Thompson NFA Studio
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A desktop-style web application that converts Regular Expressions to NFAs using Thompson's Construction Algorithm, step by step. An educational tool for students studying Formal Languages and Automata Theory, with a "scientific dark lab" aesthetic.
 
 ## Run & Operate
 
@@ -19,26 +19,45 @@ _Replace the heading above with the project's name, and this line with one sente
 - Validation: Zod (`zod/v4`), `drizzle-zod`
 - API codegen: Orval (from OpenAPI spec)
 - Build: esbuild (CJS bundle)
+- **Frontend**: React + Vite, Cytoscape.js (graph), cytoscape-dagre (layout), xlsx (SheetJS for Excel)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/thompson-nfa-studio/src/thompson.ts` — Thompson's construction algorithm (recursive descent parser + NFA builder)
+- `artifacts/thompson-nfa-studio/src/fileUtils.ts` — JSON/TXT/CSV/XLSX import and NFA JSON/CSV export
+- `artifacts/thompson-nfa-studio/src/components/` — UI components (InputPanel, GraphView, TransitionTable, StepPanel, FileImporter)
+- `artifacts/thompson-nfa-studio/public/examples/` — 3 example NFA JSON files
+- `lib/api-spec/openapi.yaml` — API contract source of truth
+- `lib/db/src/schema/` — Drizzle DB schema
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Frontend-only: Thompson NFA Studio requires no backend — all conversion logic runs in the browser via `thompson.ts`
+- Cytoscape.js with dagre layout renders the NFA graph left-to-right; node/edge styles are defined inline in GraphView.tsx
+- Each conversion step captures a full NFA snapshot (`currentNFA`) so the step-by-step panel can rewind/replay without recomputing
+- `cytoscape-dagre` has no TypeScript types; imported with `as any` cast to suppress TS errors
+- UI is built with custom CSS via Tailwind utility classes; no external UI component libraries (except shadcn Toaster for notifications)
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Convert any regex (|, *, +, ?, parentheses, concatenation) to an NFA via Thompson's Construction
+- Step-by-step walkthrough with animated graph building
+- Import NFA from JSON, TXT (regex), CSV, or Excel files
+- Export NFA as JSON or CSV transition table; export graph as PNG
+- All UI copy is in Turkish
+- Three built-in presets: (a|b)*abb, a*b+, (ab|c)?d
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- All UI text in Turkish
+- Scientific dark lab aesthetic (#0d1117 background, cyan/blue accents, amber epsilon transitions, green accept states)
+- Custom CSS only — no component library for main design
+- No emojis in UI
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Run `pnpm install` after changing package.json (cytoscape-dagre, xlsx are in `dependencies`, not `devDependencies`)
+- After removing `@workspace/api-client-react` dep, the `tsconfig.json` references must also be cleared to avoid TS2742 errors
 
 ## Pointers
 
