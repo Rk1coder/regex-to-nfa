@@ -97,3 +97,12 @@
 body { font-family: var(--app-font-sans); background: #0d1117; color: white; }
 .regex-input { font-family: var(--app-font-mono); }
 .nfa-graph-container { width: 100%; height: 100%; }
+
+@keyframes table-flash {
+  0%   { background-color: rgba(6, 182, 212, 0.25); }
+  60%  { background-color: rgba(6, 182, 212, 0.12); }
+  100% { background-color: transparent; }
+}
+.animate-table-flash {
+  animation: table-flash 0.9s ease-out forwards;
+}

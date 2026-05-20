@@ -112,7 +112,20 @@ function App() {
           {/* Transition table */}
           {activeNfa && (
             <div className="h-44 flex-shrink-0 border-t border-[hsl(var(--border))] bg-[#0a0f16] overflow-hidden">
-              <TransitionTable nfa={activeNfa} />
+              <TransitionTable
+                nfa={activeNfa}
+                newStateIds={newStateIds}
+                newTransitions={
+                  stepMode && currentStep >= 0 && steps[currentStep]
+                    ? steps[currentStep].addedTransitions
+                    : []
+                }
+                stepLabel={
+                  stepMode && currentStep >= 0 && steps[currentStep]
+                    ? `Adım ${currentStep + 1} / ${steps.length}: ${steps[currentStep].description}`
+                    : undefined
+                }
+              />
             </div>
           )}
         </main>
