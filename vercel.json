@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm --filter @workspace/thompson-nfa-studio run build",
+  "buildCommand": "node scripts/build-vercel.cjs",
   "outputDirectory": "public",
   "rewrites": [
     {
