@@ -1,3 +1,14 @@
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="180" height="180" rx="36" fill="#FF3C00"/>
+  <rect width="180" height="180" rx="34" fill="#0D1117"/>
+  <path d="M50 94C61 66 83 54 116 58" stroke="#22D3EE" stroke-width="10" stroke-linecap="round"/>
+  <path d="M76 112C90 129 111 130 132 114" stroke="#34D399" stroke-width="10" stroke-linecap="round"/>
+  <path d="M118 58L103 49M118 58L105 70" stroke="#22D3EE" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M132 114L116 116M132 114L123 101" stroke="#34D399" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="47" cy="96" r="22" fill="#111827" stroke="#E5E7EB" stroke-width="8"/>
+  <circle cx="88" cy="57" r="18" fill="#111827" stroke="#22D3EE" stroke-width="7"/>
+  <circle cx="133" cy="111" r="22" fill="#111827" stroke="#34D399" stroke-width="8"/>
+  <circle cx="133" cy="111" r="12" stroke="#34D399" stroke-width="5"/>
+  <path d="M39 130H73" stroke="#F59E0B" stroke-width="10" stroke-linecap="round"/>
+  <path d="M56 113V147" stroke="#F59E0B" stroke-width="10" stroke-linecap="round"/>
+  <text x="84" y="105" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" fill="#E5E7EB">*</text>
 </svg>
