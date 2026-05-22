@@ -3,7 +3,7 @@
   "framework": "vite",
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm --filter @workspace/thompson-nfa-studio run build",
-  "outputDirectory": "artifacts/thompson-nfa-studio/dist/public",
+  "outputDirectory": "public",
   "rewrites": [
     {
       "source": "/(.*)",
