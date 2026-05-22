@@ -5,6 +5,20 @@ web tabanlı bir uygulamadır. Uygulama girilen regex ifadesini çözümler, NFA
 grafiğini oluşturur, geçiş tablosunu gösterir ve istenirse dönüşüm adımlarını
 animasyonlu olarak izletir.
 
+## Uygulama Görselleri
+
+### Başlangıç Ekranı
+
+<p align="center">
+  <img src="docs/media/nfa-studio-start.gif" alt="Thompson NFA Studio başlangıç ekranı" width="760">
+</p>
+
+### Regex'ten NFA'ya Dönüşüm
+
+<p align="center">
+  <img src="docs/media/nfa-studio-result.gif" alt="Regex ifadesinden oluşturulan NFA grafiği ve geçiş tablosu" width="760">
+</p>
+
 ## Proje Amacı
 
 Bilgisayar bilimlerinde düzenli ifadeler ile sonlu otomatlar arasındaki
