@@ -112,3 +112,5 @@ NFA elde edilir.
 Proje, ders kapsamında düzenli ifadeden NFA oluşturma konusunu göstermek için
 hazırlanmıştır. Kodlar TypeScript ile yazılmıştır ve temel algoritma
 `thompson.ts` dosyasında toplanmıştır.
+
+<!-- -->
